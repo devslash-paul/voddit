@@ -8,7 +8,7 @@
     $scope.currentSeries = undefined;
     $scope.state = "paused";
     $scope.gameChoices = [];
-    $scope.currentGame = 0;
+    $scope.currentGame = undefined;
 
     sc.setGame = function (index) {
       sc.currentGame = index;
