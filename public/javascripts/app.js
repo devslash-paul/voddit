@@ -15,21 +15,26 @@ function getMinsSecs(str) {
     var sc = $scope;
     $scope.games = [];
     $scope.currentSeries = undefined;
-    $scope.state = "paused";
+
     $scope.gameChoices = [];
     $scope.currentGame = undefined;
+
+    $scope.playingGame = undefined;
+    $scope.playingSeries = undefined;
+
+    $http.get("getGameData.json").success(function (data) {
+      sc.games = data.games;
+      window.games = data.games
+    });
 
     sc.setGame = function (index) {
       sc.currentGame = index;
       var url = sc.games[sc.currentSeries].games[index].YouTube.match(/v=([^&]+)/)[1];
       player.loadVideoById(url);
       player.playVideo();
+      sc.playingSeries = sc.currentSeries;
+      sc.playingGame = sc.currentGame;
     };
-
-    $http.get("getGameData.json").success(function (data) {
-      sc.games = data.games;
-      window.games = data.games
-    });
 
     sc.setSeries = function (index) {
       sc.currentSeries = index;

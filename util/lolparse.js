@@ -18,7 +18,7 @@ function lolGameFromTable(table, $, results) {
 
   // We have the heading info, so lets grab out the team names for each game, as well as the yt link
   var roundRows = $(table).find('tbody tr');
-  var gameAttrs = {teamA: "", teamB: "", games:[]};
+  var gameAttrs = {teamA: "", teamB: "", games: []};
 
   var teamNames = [];
   $(roundRows).each(function (i, row) {
@@ -30,7 +30,7 @@ function lolGameFromTable(table, $, results) {
     }
 
     var pickBanURL = $(row).find("td").eq(info["YouTube"]).find("a").eq(0).attr('href');
-    var gameStartURL = $(row).find("td").eq(info["YouTube"]+1).find("a").eq(0).attr('href');
+    var gameStartURL = $(row).find("td").eq(info["YouTube"] + 1).find("a").eq(0).attr('href');
 
     var pickBanTime = pickBanURL.match(/t=([0-9ms]+)/);
     var gameStartTime = gameStartURL.match(/t=([0-9ms]+)/);
@@ -45,7 +45,7 @@ function lolGameFromTable(table, $, results) {
     if (-1 === teamNames.indexOf(team1) || -1 === teamNames.indexOf(team2)) {
       // In this case the same day, new teams. Create a new rounds
       if (gameAttrs.games.length > 0) {
-        results.push({teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games:gameAttrs.games});
+        results.push({teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games: gameAttrs.games});
 
       }
 
@@ -68,9 +68,8 @@ function lolGameFromTable(table, $, results) {
     }
   });
 
-  if (gameAttrs.games.length > 0)
-  {
-    results.push({teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games:gameAttrs.games});
+  if (gameAttrs.games.length > 0) {
+    results.push({teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games: gameAttrs.games});
   }
 }
 

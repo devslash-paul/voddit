@@ -14,7 +14,9 @@ block content
       .col.m2
         p
         div(ng-repeat='game in gameChoices')
-          button.game-header.btn(ng-click="setGame($index)" ng-class="{hover:currentGame=={{$index}}}") Game {{$index +1}}
+          button.game-header.btn(ng-click="setGame($index)"
+           ng-class="{hover:currentSeries===playingSeries && playingGame==={{$index}}}").
+            Game {{$index +1}}
 
         div(ng-if="currentGame!=undefined")
           hr
