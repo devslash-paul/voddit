@@ -1,0 +1,21 @@
+{
+  "name": "SpoilNah",
+  "version": "0.0.0",
+  "authors": [
+    "Paul Thompson <paulthom12345@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Bootflat": "~2.0.4"
+  }
+}

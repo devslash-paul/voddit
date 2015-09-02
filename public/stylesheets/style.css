@@ -1,0 +1,33 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+html,body {
+  height:100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+h5 {
+  display:inline-block;
+}
+
+.game-header {
+  margin:5px;
+}
+
+.game-header .btn {
+  height:50px;
+  display: inline;
+}
+
+.hover {
+  background-color: red !important;
+}
