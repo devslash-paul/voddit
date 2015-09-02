@@ -16,6 +16,9 @@
     "tests"
   ],
   "dependencies": {
-    "Bootflat": "~2.0.4"
+    "Bootflat": "~2.0.4",
+    "jquery": "~2.1.4",
+    "angular": "~1.4.5",
+    "materialize": "~0.97.0"
   }
 }
