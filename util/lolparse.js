@@ -29,6 +29,13 @@ function lolGameFromTable(table, $, results) {
       return;
     }
 
+    var pickBanURL = $(row).find("td").eq(info["YouTube"]).find("a").eq(0).attr('href');
+    var gameStartURL = $(row).find("td").eq(info["YouTube"]+1).find("a").eq(0).attr('href');
+
+    var pickBanTime = pickBanURL.match(/t=([0-9ms]+)/);
+    var gameStartTime = gameStartURL.match(/t=([0-9ms]+)/);
+
+
     if (teamNames.length == 0) {
       teamNames = [team1, team2];
       gameAttrs.teamA = team1;
@@ -51,7 +58,9 @@ function lolGameFromTable(table, $, results) {
     var round = {};
     round["Team 1"] = team1;
     round["Team 2"] = team2;
-    round["YouTube"] = $(row).find("td").eq(info["YouTube"]).find("a").eq(0).attr('href');
+    round.YouTube = pickBanURL;
+    round.pickBanTime = pickBanTime == null || pickBanTime.length == 0 ? 0 : pickBanTime[1];
+    round.gameStartTime = gameStartTime == null || gameStartTime.length == 0 ? 0 : gameStartTime[1];
     // Check if this is a new set on the same day
     // Check for a game link
     if (round["Team 2"].length > 0) {

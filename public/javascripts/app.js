@@ -1,3 +1,12 @@
+function getMinsSecs(str) {
+  var minStr = str.match(/(\d)m/);
+  var secStr = str.match(/(\d)s/);
+
+  var mins = minStr == null || minStr.length == 0 ? 0 : parseInt(minStr[1]);
+  var secs = secStr == null || secStr.length == 0 ? 0 : parseInt(secStr[1]);
+  return {mins: mins, secs: secs};
+}
+
 (function () {
   var app = angular.module('spoiler', []);
 
@@ -22,17 +31,41 @@
       window.games = data.games
     });
 
-    sc.setSeries = function(index) {
+    sc.setSeries = function (index) {
       sc.currentSeries = index;
       sc.gameChoices = sc.games[index].games;
-    }
+    };
+
+    sc.toStart = function () {
+      player.seekTo(0);
+    };
+
+    sc.toPickBans = function () {
+      var str = sc.games[sc.currentSeries].games[sc.currentGame].pickBanTime;
+      var __ret = getMinsSecs(str)
+      var mins = __ret.mins;
+      var secs = __ret.secs;
+      console.log(mins);
+      console.log(secs)
+      player.seekTo(mins * 60 + secs);
+    };
+
+    sc.toGameStart = function () {
+      var str = sc.games[sc.currentSeries].games[sc.currentGame].gameStartTime;
+      console.log(str);
+      var __ret = getMinsSecs(str);
+      var mins = __ret.mins;
+      var secs = __ret.secs;
+      player.seekTo(mins * 60 + secs);
+    };
+
   }]);
 
   app.directive('game', ['$http', function ($http, $scope) {
     return {
       restrict: 'E',
       templateUrl: '/templates/template.html',
-      controller: function() {
+      controller: function () {
         var gameCtrl = this;
         this.data = {};
 
