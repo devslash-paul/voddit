@@ -1,6 +1,6 @@
 function getMinsSecs(str) {
-  var minStr = str.match(/(\d)m/);
-  var secStr = str.match(/(\d)s/);
+  var minStr = str.match(/(\d+)m/);
+  var secStr = str.match(/(\d+)s/);
 
   var mins = minStr == null || minStr.length == 0 ? 0 : parseInt(minStr[1]);
   var secs = secStr == null || secStr.length == 0 ? 0 : parseInt(secStr[1]);
