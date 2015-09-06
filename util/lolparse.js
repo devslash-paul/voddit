@@ -5,7 +5,8 @@ function lolGameFromTable(table, $, results) {
   var info = {
     "Team 1": -1,
     "Team 2": -1,
-    "YouTube": -1
+    "YouTube": -1,
+    "#": -1
   };
 
   var headings = $(table).find('th');
@@ -24,6 +25,8 @@ function lolGameFromTable(table, $, results) {
   $(roundRows).each(function (i, row) {
     var team1 = $(row).find("td").eq(info["Team 1"]).text().trim();
     var team2 = $(row).find("td").eq(info["Team 2"]).text().trim();
+    var number = $(row).find("td").eq(info["#"]).text().trim().substring(0,1);
+    
 
     if (team1.length == 0 || team2.length == 0) {
       return;
@@ -41,18 +44,20 @@ function lolGameFromTable(table, $, results) {
       teamNames = [team1, team2];
       gameAttrs.teamA = team1;
       gameAttrs.teamB = team2;
+      gameAttrs.roundId = number;
     }
 
     // This occurs in the event that it's on the same day
     // but with new teams
     if (-1 === teamNames.indexOf(team1) || -1 === teamNames.indexOf(team2)) {
       if (gameAttrs.games.length > 0) {
-        results.push({teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games: gameAttrs.games});
+        results.push({roundId: gameAttrs.roundId, teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games: gameAttrs.games});
       }
 
       teamNames = [team1, team2];
       gameAttrs.teamA = team1;
       gameAttrs.teamB = team2;
+      gameAttrs.roundId = number;
       gameAttrs.games = [];
     }
 
@@ -62,7 +67,7 @@ function lolGameFromTable(table, $, results) {
     round.YouTube = pickBanURL;
     round.pickBanTime = pickBanTime == null || pickBanTime.length == 0 ? 0 : pickBanTime[1];
     round.gameStartTime = gameStartTime == null || gameStartTime.length == 0 ? 0 : gameStartTime[1];
-    
+
     // It's possible that this is an empty row so thus we should ignore it
     if (round["Team 2"].length > 0) {
       gameAttrs.games.push(round);
@@ -70,7 +75,7 @@ function lolGameFromTable(table, $, results) {
   });
 
   if (gameAttrs.games.length > 0) {
-    results.push({teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games: gameAttrs.games});
+    results.push({roundId: gameAttrs.roundId, teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games: gameAttrs.games});
   }
 }
 

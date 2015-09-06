@@ -24,7 +24,7 @@ h5 {
 }
 
 .game-header .btn {
-  height:50px;
+  padding:0;
   display: inline;
 }
 
@@ -38,4 +38,16 @@ h5 {
 
 .loser {
   color:silver;
+}
+
+.buttoncontent {
+  height:100%;
+}
+.roundid {
+  background-color: #6F6F88;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+  float: left;
+  width: 30px;
 }
