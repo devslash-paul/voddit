@@ -16,7 +16,6 @@ function onYouTubeIframeAPIReady() {
       enablejsapi: 1,
       controls: 1,
       autoplay: 1,
-      theme: 'dark',
       iv_load_policy:3,
       modestbranding:1
     },

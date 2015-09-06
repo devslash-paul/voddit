@@ -25,7 +25,7 @@ function lolGameFromTable(table, $, results) {
   $(roundRows).each(function (i, row) {
     var team1 = $(row).find("td").eq(info["Team 1"]).text().trim();
     var team2 = $(row).find("td").eq(info["Team 2"]).text().trim();
-    var number = $(row).find("td").eq(info["#"]).text().trim().substring(0,1);
+    var number = $(row).find("td").eq(info["#"]).text().trim();
 
 
     if (team1.length == 0 || team2.length == 0) {
