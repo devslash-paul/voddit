@@ -1,5 +1,11 @@
 <div class="game-header">
     <button class="btn" style="width:100%" ng-click="setSeries($index)" ng-class="{'hover':currentSeries=={{$index}}}">
-        {{gamedata.teamA}} vs. {{gamedata.teamB}}
+        <i ng-if="winner(gamedata.teamA)" class="fa fa-trophy winner"></i>
+        <i ng-if="loser(gamedata.teamA)" class="fa fa-trophy loser"></i>
+        {{removeWinLose(gamedata.teamA)}}
+        vs.
+        <i ng-if="winner(gamedata.teamB)" class="fa fa-trophy winner"></i>
+        <i ng-if="loser(gamedata.teamB)" class="fa fa-trophy loser"></i>
+        {{removeWinLose(gamedata.teamB)}}
     </button>
 </div>

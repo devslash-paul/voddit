@@ -90,4 +90,4 @@ renderLol = function (url, callback) {
   });
 };
 
-module.exports.renderLol = renderLol
+module.exports.renderLol = renderLol;

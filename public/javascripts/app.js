@@ -27,6 +27,18 @@ function getMinsSecs(str) {
       window.games = data.games
     });
 
+    sc.winner = function (str) {
+      return str.indexOf("Winner of") != -1;
+    };
+
+    sc.loser = function (str) {
+      return str.indexOf("Loser of") != -1;
+    };
+
+    sc.removeWinLose = function (str) {
+      return str.replace("Winner of", "").replace("Loser of", "");
+    };
+
     sc.setGame = function (index) {
       sc.currentGame = index;
       var url = sc.games[sc.currentSeries].games[index].YouTube.match(/v=([^&]+)/)[1];

@@ -31,3 +31,11 @@ h5 {
 .hover {
   background-color: red !important;
 }
+
+.winner {
+  color: gold;
+}
+
+.loser {
+  color:silver;
+}
