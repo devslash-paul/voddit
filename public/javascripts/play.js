@@ -13,7 +13,12 @@ function onYouTubeIframeAPIReady() {
     width: '100%',
     playerVars: {
       enablecastapi:1,
-      theme: 'dark'
+      enablejsapi: 1,
+      controls: 1,
+      autoplay: 1,
+      theme: 'dark',
+      iv_load_policy:3,
+      modestbranding:1
     },
     events: {
       'onReady': onPlayerReady,

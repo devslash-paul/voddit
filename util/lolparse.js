@@ -26,7 +26,7 @@ function lolGameFromTable(table, $, results) {
     var team1 = $(row).find("td").eq(info["Team 1"]).text().trim();
     var team2 = $(row).find("td").eq(info["Team 2"]).text().trim();
     var number = $(row).find("td").eq(info["#"]).text().trim().substring(0,1);
-    
+
 
     if (team1.length == 0 || team2.length == 0) {
       return;
@@ -81,6 +81,8 @@ function lolGameFromTable(table, $, results) {
 
 var renderLol = function (url, callback) {
   // Now we have to fetch the page
+  url = url.replace(/^https?:\/\//, "")
+  url = "https://" + url;
   request(url, function (err, resp, body) {
     if(err) return callback(err)
     var $ = cheerio.load(body);
