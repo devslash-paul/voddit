@@ -6,23 +6,31 @@ block head
   script(src='/javascripts/play.js')
 
 block content
-    .row.full-height(ng-controller='GameController')
-      #left-col.col.m2
-        p
-        div(ng-repeat='gamedata in games')
-          game
-      .col.m2
-        p
-        div(ng-repeat='game in gameChoices')
-          button.game-header.btn(ng-click="setGame($index)"
-           ng-class="{hover:currentSeries===playingSeries && playingGame==={{$index}}}").
-            Game {{$index +1}}
+  .row.full-height(ng-controller='GameController')
+    #left-col.col.m2
+      p
 
-        div(ng-if="currentGame!=undefined")
-          hr
-          button.btn.game-header(ng-click="toStart()") Start
-          button.btn.game-header(ng-click="toPickBans()") Picks and Bans
-          button.btn.game-header(ng-click="toGameStart()") Game Start
+      div(ng-repeat='gamedata in games')
+        game
 
-      .col.m8.full-height
-        #player
+      div(ng-if='games.length == 0').load
+        p Loading LoL Vods
+        span(us-spinner="{position: 'relative'}")
+
+    .col.m2
+      p
+      div(ng-repeat='game in gameChoices')
+        button.game-header.btn(ng-click="setGame($index)"
+        ng-class="{hover:currentSeries===playingSeries && playingGame==={{$index}}}").
+          Game {{$index +1}}
+
+      div(ng-if="currentGame!=undefined")
+        hr
+        button.btn.game-header(ng-click="toStart()") Start
+        button.btn.game-header(ng-click="toPickBans()") Picks and Bans
+        button.btn.game-header(ng-click="toGameStart()") Game Start
+
+    .col.m8.full-height
+      #player
+        .desc
+          p Pick a game on the left to get started!

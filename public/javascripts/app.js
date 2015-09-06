@@ -8,7 +8,7 @@ function getMinsSecs(str) {
 }
 
 (function () {
-  var app = angular.module('spoiler', []);
+  var app = angular.module('spoiler', ['angularSpinner']);
 
 
   app.controller('GameController', ['$http', "$scope", function ($http, $scope) {
@@ -42,8 +42,7 @@ function getMinsSecs(str) {
     sc.setGame = function (index) {
       sc.currentGame = index;
       var url = sc.games[sc.currentSeries].games[index].YouTube.match(/v=([^&]+)/)[1];
-      player.loadVideoById(url);
-      player.playVideo();
+      startYT(url);
       sc.playingSeries = sc.currentSeries;
       sc.playingGame = sc.currentGame;
     };

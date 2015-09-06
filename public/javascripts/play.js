@@ -7,23 +7,29 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 // 3. This function creates an <iframe> (and YouTube player)
 //    after the API code downloads.
 var player;
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '100%',
-    width: '100%',
-    playerVars: {
-      enablecastapi:1,
-      enablejsapi: 1,
-      controls: 1,
-      autoplay: 1,
-      iv_load_policy:3,
-      modestbranding:1
-    },
-    events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
-    }
-  });
+function startYT(videoId) {
+  if (!player) {
+    player = new YT.Player('player', {
+      height: '100%',
+      width: '100%',
+      videoId: videoId,
+      playerVars: {
+        enablecastapi: 1,
+        enablejsapi: 1,
+        controls: 1,
+        autoplay: 1,
+        iv_load_policy: 3,
+        modestbranding: 1
+      },
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+  else {
+    player.loadVideoById(videoId);
+  }
 }
 
 // 4. The API will call this function when the video player is ready.
@@ -36,7 +42,7 @@ function onPlayerReady(event) {
 //    the player should play for six seconds and then stop.
 var done = false;
 function onPlayerStateChange(event) {
-  if(event.data == -1) {
+  if (event.data == -1) {
     event.target.playVideo();
   }
 }
