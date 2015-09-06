@@ -1,6 +1,6 @@
 var request = require('request'),
-  cheerio = require('cheerio');
-
+    cheerio = require('cheerio');
+    
 function lolGameFromTable(table, $, results) {
   var info = {
     "Team 1": -1,
@@ -35,18 +35,19 @@ function lolGameFromTable(table, $, results) {
     var pickBanTime = pickBanURL.match(/t=([0-9ms]+)/);
     var gameStartTime = gameStartURL.match(/t=([0-9ms]+)/);
 
-
+    // This means that this is the first row that we're dealing
+    // with from this table.
     if (teamNames.length == 0) {
       teamNames = [team1, team2];
       gameAttrs.teamA = team1;
       gameAttrs.teamB = team2;
     }
 
+    // This occurs in the event that it's on the same day
+    // but with new teams
     if (-1 === teamNames.indexOf(team1) || -1 === teamNames.indexOf(team2)) {
-      // In this case the same day, new teams. Create a new rounds
       if (gameAttrs.games.length > 0) {
         results.push({teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games: gameAttrs.games});
-
       }
 
       teamNames = [team1, team2];
@@ -61,8 +62,8 @@ function lolGameFromTable(table, $, results) {
     round.YouTube = pickBanURL;
     round.pickBanTime = pickBanTime == null || pickBanTime.length == 0 ? 0 : pickBanTime[1];
     round.gameStartTime = gameStartTime == null || gameStartTime.length == 0 ? 0 : gameStartTime[1];
-    // Check if this is a new set on the same day
-    // Check for a game link
+    
+    // It's possible that this is an empty row so thus we should ignore it
     if (round["Team 2"].length > 0) {
       gameAttrs.games.push(round);
     }
@@ -73,9 +74,10 @@ function lolGameFromTable(table, $, results) {
   }
 }
 
-renderLol = function (url, callback) {
+var renderLol = function (url, callback) {
   // Now we have to fetch the page
   request(url, function (err, resp, body) {
+    if(err) return callback(err)
     var $ = cheerio.load(body);
     var tables = $("div.content .expando form table");
 
