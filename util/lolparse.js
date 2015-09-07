@@ -97,12 +97,15 @@ var renderLol = function (url, callback) {
     // if it exists and is still valid
     if (doc) {
       console.log("Request has been cached");
-      hasReturned = true;
+      hasReturned = false;
       var moreThanFive = doc.updated - Date.now() < -300000;
       var moreThanTen = doc.updated - Date.now() < -600000;
 
+      // If you query between 5 and 10 minutes we'll give it to you
+      // but we'll go back and query as well
       if (moreThanFive && !moreThanTen) {
         // We should update.
+        hasReturned = true;
         callback(doc.content);
       }
       else if(!moreThanFive && !moreThanTen){
