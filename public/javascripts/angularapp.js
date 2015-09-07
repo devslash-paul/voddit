@@ -24,7 +24,6 @@ function getMinsSecs(str) {
 
     $http.get("getGameData.json").success(function (data) {
       sc.games = data.games;
-      window.games = data.games
     });
 
     sc.winner = function (str) {
@@ -61,14 +60,11 @@ function getMinsSecs(str) {
       var __ret = getMinsSecs(str)
       var mins = __ret.mins;
       var secs = __ret.secs;
-      console.log(mins);
-      console.log(secs)
       player.seekTo(mins * 60 + secs);
     };
 
     sc.toGameStart = function () {
       var str = sc.games[sc.currentSeries].games[sc.currentGame].gameStartTime;
-      console.log(str);
       var __ret = getMinsSecs(str);
       var mins = __ret.mins;
       var secs = __ret.secs;
