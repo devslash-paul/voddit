@@ -1,6 +1,8 @@
 var request = require('request'),
-    cheerio = require('cheerio');
-    
+  cheerio = require('cheerio'),
+  Page = require("../model/pagecache");
+
+
 function lolGameFromTable(table, $, results) {
   var info = {
     "Team 1": -1,
@@ -51,7 +53,12 @@ function lolGameFromTable(table, $, results) {
     // but with new teams
     if (-1 === teamNames.indexOf(team1) || -1 === teamNames.indexOf(team2)) {
       if (gameAttrs.games.length > 0) {
-        results.push({roundId: gameAttrs.roundId, teamA: gameAttrs.teamA, teamB: gameAttrs.teamB, games: gameAttrs.games});
+        results.push({
+          roundId: gameAttrs.roundId,
+          teamA: gameAttrs.teamA,
+          teamB: gameAttrs.teamB,
+          games: gameAttrs.games
+        });
       }
 
       teamNames = [team1, team2];
@@ -83,19 +90,52 @@ var renderLol = function (url, callback) {
   // Now we have to fetch the page
   url = url.replace(/^https?:\/\//, "")
   url = "https://" + url;
-  request(url, function (err, resp, body) {
-    if(err) return callback(err)
-    var $ = cheerio.load(body);
-    var tables = $("div.content .expando form table");
+  // Look for the url in the db. If it was available less than 5 minutes ago go get it.
+  var hasReturned = false;
+  Page.findOne({url: url}, function (err, doc) {
+    if (err) console.log(err);
+    // if it exists and is still valid
+    if (doc) {
+      console.log("Request has been cached");
+      hasReturned = true;
+      var moreThanFive = doc.updated - Date.now() < -300000;
+      var moreThanTen = doc.updated - Date.now() < -600000;
 
-    var resObject = {games: []};
-    $(tables).each(function (i, table) {
-      // Each table is a new match. Lets get some stats. The first line tells us how the
-      // table is layed out. We're going to look for some words
-      lolGameFromTable(table, $, resObject.games);
+      if (moreThanFive && !moreThanTen) {
+        // We should update.
+        callback(doc.content);
+      }
+      else if(!moreThanFive && !moreThanTen){
+        return callback(doc.content);
+      }
+    }
+
+    request(url, function (err, resp, body) {
+      if (err) console.log(err);
+      var $ = cheerio.load(body);
+      var tables = $("div.content .expando form table");
+
+      var resObject = {games: []};
+      $(tables).each(function (i, table) {
+        // Each table is a new match. Lets get some stats. The first line tells us how the
+        // table is layed out. We're going to look for some words
+        lolGameFromTable(table, $, resObject.games);
+      });
+
+      // Now we should cache the object
+      var query = {url: url};
+      Page.findOneAndUpdate(query, {
+        url: url,
+        updated: new Date(),
+        content: resObject
+      }, {upsert: true}, function (err, doc) {
+        if (err) console.log(err);
+        else console.log("Saved new page")
+      });
+
+      if (!hasReturned)
+        callback(resObject);
     });
-
-    callback(resObject);
   });
 };
 

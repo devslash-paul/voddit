@@ -1,7 +1,11 @@
 var mongoose = require('mongoose');
 
 var pageSchema = mongoose.Schema({
-    url: String,
+    url: {type:String, unique: true},
     updated: Date,
-    results: JSON
+    content: Object
 });
+
+var Page = mongoose.model('PageCache', pageSchema);
+
+module.exports = Page;
