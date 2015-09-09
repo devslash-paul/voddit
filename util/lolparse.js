@@ -88,7 +88,7 @@ function lolGameFromTable(table, $, results) {
 
 var renderLol = function (url, callback) {
   // Now we have to fetch the page
-  url = url.replace(/^https?:\/\//, "")
+  url = url.replace(/^https?:\/\/?/, "")
   url = "https://" + url;
   // Look for the url in the db. If it was available less than 5 minutes ago go get it.
   var hasReturned = false;
