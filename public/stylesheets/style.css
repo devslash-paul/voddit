@@ -40,6 +40,10 @@ h5 {
     color: silver;
 }
 
+.btn {
+    width: 100%;
+}
+
 .buttoncontent {
     height: 100%;
 }

@@ -20,7 +20,8 @@ function startYT(videoId) {
         autoplay: 1,
         iv_load_policy: 3,
         showinfo: 0,
-        modestbranding: 1
+        modestbranding: 1,
+        autohide: 1
       },
       events: {
         'onReady': onPlayerReady,

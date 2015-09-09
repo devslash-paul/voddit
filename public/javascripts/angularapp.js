@@ -24,6 +24,7 @@ function getMinsSecs(str) {
 
     $http.get("getGameData.json").success(function (data) {
       sc.games = data.games;
+      window.games = data.games;
     });
 
     sc.winner = function (str) {
