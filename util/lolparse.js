@@ -37,8 +37,10 @@ function lolGameFromTable(table, $, results) {
     var pickBanURL = $(row).find("td").eq(info["YouTube"]).find("a").eq(0).attr('href');
     var gameStartURL = $(row).find("td").eq(info["YouTube"] + 1).find("a").eq(0).attr('href');
 
-    var pickBanTime = pickBanURL.match(/t=([0-9ms]+)/);
-    var gameStartTime = gameStartURL.match(/t=([0-9ms]+)/);
+    var pickBanTime;
+    if(pickBanURL) pickBanTime = pickBanURL.match(/t=([0-9ms]+)/);
+    var gameStartTime;
+    if(gameStartURL) gameStartTime = gameStartURL.match(/t=([0-9ms]+)/);
 
     // This means that this is the first row that we're dealing
     // with from this table.
